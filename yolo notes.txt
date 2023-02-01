@@ -1,0 +1,16 @@
+Goal: Make the COCO dataset directory similar to PASCAL's: https://www.kaggle.com/datasets/aladdinpersson/pascal-voc-yolo-works-with-albumentations
+
+Steps:
+- Download COCO dataset
+- in the root directory, create 'images' folder and put all images there (train and test combined)
+- create 'labels' folder and create text files with the same name as the images (train and test combined)
+- each label file should contain the category number and the bounding box (PASCAL   format), separated by spaces
+- create train.csv and test.csv in the root directory.
+- the CSV files will contain two columns: one for the image filenames, and the other for the label filenames.
+- can now run train.py on COCO dataset
+
+
+TO DO:
+- Get height and width of image.
+- YOLO format = (category, x_center, y_center, width, height)
+- scaled from 0 to 1
