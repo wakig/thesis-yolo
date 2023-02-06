@@ -96,13 +96,13 @@ def non_max_suppression(bboxes, iou_threshold, threshold, box_format="corners"):
     """
 
     assert type(bboxes) == list
-    print(len(bboxes))
+    # print(len(bboxes))
     bboxes = [box for box in bboxes if box[1] > threshold]
     bboxes = sorted(bboxes, key=lambda x: x[1], reverse=True)
     bboxes_after_nms = []
     while bboxes:
         chosen_box = bboxes.pop(0)
-        print(len(bboxes))
+        # print(len(bboxes))
         bboxes = [
             box
             for box in bboxes
@@ -120,7 +120,7 @@ def non_max_suppression(bboxes, iou_threshold, threshold, box_format="corners"):
 
 
 def mean_average_precision(
-    pred_boxes, true_boxes, iou_threshold=0.5, box_format="midpoint", num_classes=20
+    pred_boxes, true_boxes, iou_threshold=0.5, box_format="midpoint", num_classes=1
 ):
     """
     Video explanation of this function:
@@ -285,7 +285,6 @@ def get_evaluation_bboxes(
     device="cuda",
 ):
     # make sure model is in eval before get bboxes
-    #print('tite')
     model.eval()
     train_idx = 0
     all_pred_boxes = []

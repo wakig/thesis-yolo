@@ -101,7 +101,7 @@ class ScalePrediction(nn.Module):
 
 
 class YOLOv3(nn.Module):
-    def __init__(self, in_channels=3, num_classes=80):
+    def __init__(self, in_channels=3, num_classes=1): # original: 80
         super().__init__()
         self.num_classes = num_classes
         self.in_channels = in_channels
@@ -165,7 +165,7 @@ class YOLOv3(nn.Module):
 
 
 if __name__ == "__main__":
-    num_classes = 20
+    num_classes = 1
     IMAGE_SIZE = 416
     model = YOLOv3(num_classes=num_classes)
     x = torch.randn((2, 3, IMAGE_SIZE, IMAGE_SIZE))
