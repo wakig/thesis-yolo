@@ -14,7 +14,7 @@ For training, run `train.py`. <br>
 For inferencing, run `detect.py`. Currently, it only makes predictions (bounding boxes) on a few sample images from the test set.
 
 ## To Do
-* Train the model further
+* Train the model further (and record metrics)
 * Work on video/webcam inferencing
 
 ## References
