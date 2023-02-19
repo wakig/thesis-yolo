@@ -515,6 +515,32 @@ def plot_couple_examples(model, loader, thresh, iou_thresh, anchors):
         )
         plot_image(x[i].permute(1,2,0).detach().cpu(), nms_boxes)
 
+def plot_all_examples(model, loader, thresh, iou_thresh, anchors):
+    ite = iter(loader)
+    while True:
+        model.eval()
+        x, y = next(ite)
+        x = x.to("cuda")
+        with torch.no_grad():
+            out = model(x)
+            bboxes = [[] for _ in range(x.shape[0])]
+            for i in range(3):
+                batch_size, A, S, _, _ = out[i].shape
+                anchor = anchors[i]
+                boxes_scale_i = cells_to_bboxes(
+                    out[i], anchor, S=S, is_preds=True
+                )
+                for idx, (box) in enumerate(boxes_scale_i):
+                    bboxes[idx] += box
+
+            model.train()
+
+        for i in range(batch_size):
+            nms_boxes = non_max_suppression(
+                bboxes[i], iou_threshold=iou_thresh, threshold=thresh, box_format="midpoint",
+            )
+            plot_image(x[i].permute(1,2,0).detach().cpu(), nms_boxes)
+
 
 
 def seed_everything(seed=42):

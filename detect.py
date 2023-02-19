@@ -15,7 +15,8 @@ from utils import (
     load_checkpoint,
     check_class_accuracy,
     get_loaders,
-    plot_couple_examples
+    plot_couple_examples,
+    plot_all_examples
 )
 from loss import YoloLoss
 import warnings
@@ -48,30 +49,7 @@ def main():
     anchors = config.ANCHORS
     device = config.DEVICE
 
-    plot_couple_examples(model, test_loader, 0.6, 0.5, scaled_anchors)
-
-    model.eval()
-
-    for idx, (x, y) in enumerate(test_loader):
-        x = x.to(config.DEVICE)
-        with torch.no_grad():
-            predictions = model(x)
-
-        batch_size = x.shape[0]
-        bboxes = [[] for _ in range(batch_size)]
-
-        for i in range(3):
-            S = predictions[i].shape[2]
-            anchor = torch.tensor([*anchors[i]]).to(device) * S
-            boxes_scale_i = cells_to_bboxes(
-                predictions[i], anchor, S=S, is_preds=True
-            )
-            for idx, (box) in enumerate(boxes_scale_i):
-                bboxes[idx] += box
-        
-        for i in bboxes:
-            for j in i:
-                print(j)
+    plot_all_examples(model, test_loader, 0.6, 0.5, scaled_anchors)
 
 if __name__ == "__main__":
     main()
