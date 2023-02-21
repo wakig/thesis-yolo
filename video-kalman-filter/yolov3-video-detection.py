@@ -336,12 +336,17 @@ while True:
                 end_y = start_y + dy
                 # m = (end_x - start_x) / (end_y - start_y)
                 angle = np.rad2deg(np.arctan2(end_y - start_y, end_x - start_x))
-                length = 40
+                length = 40 # length of the arrow
                 new_x = start_x + length * np.cos(angle * np.pi / 180.0)
                 new_y = start_y + length * np.sin(angle * np.pi / 180.0)
                 cv2.arrowedLine(frame, (int(start_x), int(start_y)), (int(new_x), int(new_y)), (255,0,0), 3)
 
-                # cv2.arrowedLine(frame, (int(kf.x[0][0]), int(kf.x[1][0])), (int(kf.x[0][0])+int(kf.x[2][0]), int(kf.x[1][0])+int(kf.x[3][0])), (255,0,0), 4)
+                # Here I tried to make arrow length correspond to velocity. But it didn't look good
+                # if np.sqrt(dx**2 + dy**2) <= length:
+                #     cv2.arrowedLine(frame, (int(start_x), int(start_y)), (int(start_x)+int(dx), int(start_y)+int(dy)), (255,0,0), 3)
+                # else:
+                #     cv2.arrowedLine(frame, (int(start_x), int(start_y)), (int(new_x), int(new_y)), (255,0,0), 3)
+
                 cv2.putText(frame, 'KF: ({}, {})'.format(int(kf.x[0][0]), int(kf.x[1][0])), (10,40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
 
             # Preparing colour for current bounding box and converting from numpy array to list
